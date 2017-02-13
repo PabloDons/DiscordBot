@@ -83,7 +83,7 @@ try{
 	aliases = {};
 }
 
-var commands = {	
+var commands = {
 	"alias": {
 		usage: "<name> <actual command>",
 		description: "Creates command aliases. Useful for making simple commands on the fly",
@@ -126,7 +126,7 @@ var commands = {
     "idle": {
 				usage: "[status]",
         description: "sets bot status to idle",
-        process: function(bot,msg,suffix){ 
+        process: function(bot,msg,suffix){
 	    bot.user.setStatus("idle");
 	    bot.user.setGame(suffix);
 	}
@@ -134,7 +134,7 @@ var commands = {
     "online": {
 				usage: "[status]",
         description: "sets bot status to online",
-        process: function(bot,msg,suffix){ 
+        process: function(bot,msg,suffix){
 	    bot.user.setStatus("online");
 	    bot.user.setGame(suffix);
 	}
@@ -210,7 +210,7 @@ bot.on("ready", function () {
 	console.log("Logged in! Serving in " + bot.guilds.array().length + " servers");
 	require("./plugins.js").init();
 	console.log("type "+Config.commandPrefix+"help in Discord for a commands list.");
-	bot.user.setGame(Config.commandPrefix+"help | " + bot.guilds.array().length +" Servers"); 
+	bot.user.setGame(Config.commandPrefix+"help | " + bot.guilds.array().length +" Servers");
 });
 
 bot.on("disconnected", function () {
