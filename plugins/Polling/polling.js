@@ -2,8 +2,9 @@ var polling = {};
 
 function showTally(tally) {
 	var fields = [];
-	for (var i in tally.tally) {
-		fields.push({name:i, value:tally.tally[i].toString()});
+	var keysSorted = Object.keys(tally.tally).sort(function(a,b){return tally.tally[b]-tally.tally[a];});
+	for (var i=0, len=keysSorted.length;i<len;i++) {
+		fields.push({name:keysSorted[i], value:tally.tally[keysSorted[i]]});
 	}
 
 	return {
@@ -40,18 +41,13 @@ exports.poll = {
             return;
         }
         if (args[0] == "vote") {
-			console.log("1")
             if (args.length < 2) {
                 msg.channel.sendMessage("usage: poll vote <option>");
             }
-			console.log("2")
             if (polling[pollingIn.id].tally.hasOwnProperty(args[1])) {
-				console.log("3")
                 if (RegExp("\\<\\@\\!?"+msg.author.id+"\\>").test(args[1])) {
-					console.log("6")
                     msg.channel.sendMessage("You can't vote for yourself!");
                 } else {
-					console.log("7")
                     if (polling[pollingIn.id].votes.hasOwnProperty(msg.author.id)) {
                         polling[pollingIn.id].tally[polling[pollingIn.id].votes[msg.author.id]]-=1;
                     }
@@ -60,9 +56,7 @@ exports.poll = {
                     polling[pollingIn.id].display.edit("",{embed:showTally(polling[pollingIn.id])});
                     msg.channel.sendMessage("You've successfully voted!");
                 }
-				console.log("4")
             }
-			console.log("5")
         } else if (args[0] == "end") {
 			if (!msg.guild.roles.find('name', pollRole).members.get(msg.author.id)) {
 				msg.channel.sendMessage("You don't have permission to do this!");
